@@ -1,23 +1,23 @@
 const supabase = require('../services/supabaseClient');
 
-const getUsuarios = async (req, res) => {
-  const { data, error } = await supabase.from('usuarios').select('*');
+const getPartidos = async (req, res) => {
+  const { data, error } = await supabase.from('partidos').select('*');
   if (error) return res.status(500).json({ error: error.message });
   res.json(data);
 };
 
-const createUsuario = async (req, res) => {
-  const { nombre, email, categoria } = req.body;
-  if (!nombre || !email || !categoria) {
+const createPartido = async (req, res) => {
+  const { dia, hora, cancha, categoria, idEqui1, idEqui2, golEqui1, golEqui2 } = req.body;
+  if (!dia || !hora || !cancha || !categoria || !idEqui1 || !idEqui2) {
     return res.status(400).json({ error: 'Faltan datos obligatorios' });
   }
 
   const { data, error } = await supabase
-    .from('usuarios')
-    .insert([{ nombre, email, categoria }]);
+    .from('partidos')
+    .insert([{ dia, hora, cancha, categoria, idEqui1, idEqui2, golEqui1, golEqui2 }]);
 
   if (error) return res.status(500).json({ error: error.message });
   res.status(201).json(data[0]);
 };
 
-module.exports = { getUsuarios, createUsuario };
+module.exports = { getPartidos, createPartido };
