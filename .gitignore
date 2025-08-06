@@ -1,0 +1,5 @@
+# Ocultar variables sensibles
+.env
+
+# No subir dependencias
+node_modules/
